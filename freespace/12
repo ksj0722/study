@@ -1,0 +1,199 @@
+open-cv (구글검색 : visual studio opencv 설치방법)
+★c++
+using namespace std;
+using namespace cv;
+
+int main() {
+	Mat img_src = imread("images/love.png", IMREAD_COLOR);
+	namedWindow("src", WINDOW_AUTOSIZE);
+	imshow("src", img_src);
+	waitKey(0);
+	destroyAllWindows();
+
+}
+=====================================
+★파이썬
+import cv2
+img_src.imread("images/love.png",cv2.IMREAD_COLOR)
+cv2.imshow("src",img_src)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+=========================================
+RGB -> BGR 
+색을표현 -> 빛의 삼원소(레드,그린,블루)
+레드,그린,블루 를 각각 256단계로 쪼갬
+R -> 0~255    : 1byte(8bit)
+G -> 0~255   : 1byte(8bit)
+B -> 0~255   : 1byte(8bit) 
+
+h = 색조   [
+s = 채도
+v = 값
+
+제일밝은게 255 흰색 
+제일어두운게 0 검정
+split - 색나누는거 
+img_zero = np.zeros((height,width,1),dtype=np.uint8) 색 0으로 만들기
+
+
+
+
+import cv2  => 색 3가지 표현 
+import numpy as np
+
+img_src = cv2.imread('rgb.png',cv2.IMREAD_COLOR)
+height,width=img_src.shape[:2]
+img_b, img_g,img_r = cv2.split(img_src)
+img_zero = np.zeros((height,width,1),dtype=np.uint8)
+img_3ch_b=cv2.merge((img_b,img_zero,img_zero)) /블루
+img_3ch_g=cv2.merge((img_zero,img_b,img_zero)) /그린
+img_3ch_r=cv2.merge((img_zero,img_zero,img_r))  /레드
+
+
+cv2.imshow('src',img_src) /3가지색
+cv2.imshow('b',img_3ch_b) /블루출력
+cv2.imshow('g',img_3ch_g) /그린
+cv2.imshow('r',img_3ch_r)  /레드
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+
+=========================================
+-(GaussianBlur(img_src,(15,15),0))-
+img_src = cv2.imread('opencv.png',cv2.IMREAD_COLOR) # 파일 불러오기
+img_src = cv2.pyrDown(img_src) # 파일 사이즈 작게하기
+img_dst = cv2.GaussianBlur(img_src,(15,15),0) # ???
+
+
+cv2.imshow('src',img_src) # 출력
+cv2.imshow('dst',img_dst) # 출력
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+=================================================
+img_src = cv2.imread('sudoku-original.jpg',cv2.IMREAD_COLOR) # 파일 불러오기
+img_gray = cv2.cvtColor(img_src,cv2.COLOR_BGR2GRAY)
+img_dst = cv2.GaussianBlur(img_gray,(3,3),0)
+# ret,img_dst = cv2.threshold(img_dst,200,255,cv2.THRESH_OTSU)
+img_dst = cv2.adaptiveThreshold(img_gray,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,11,2)
+
+
+
+cv2.imshow('src',img_src) # 출력 # 출력
+cv2.imshow('dst',img_dst)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+=====================================================
+
+img_src = cv2.imread('tomato.png',cv2.IMREAD_COLOR) # 파일 불러오기
+img_hsv = cv2.cvtColor(img_src,cv2.COLOR_BGR2HSV)
+img_h,img_s,img_v = cv2.split(img_hsv)
+img_h = cv2.inRange(img_h,8,20) # 마스크 형태로 남아있다 나머지는 다없앰
+img_orange = cv2.bitwise_and(img_hsv,img_hsv,mask=img_h)
+img_orange =cv2.cvtColor(img_orange,cv2.COLOR_HSV2BGR)
+
+
+height,width = img_src.shape[:2]
+cv2.imshow('hsv',img_orange) # 출력 # 출력
+cv2.imshow('h',img_h)
+cv2.imshow('s',img_s)
+cv2.imshow('v',img_v)
+cv2.waitKey()
+cv2.destroyAllWindows()
+=======================================================
+img_src = cv2.imread('tomato.png',cv2.IMREAD_COLOR) # 파일 불러오기 -주황
+height, width = img_src.shape[:2]
+
+img_hsv = cv2.cvtColor(img_src,cv2.COLOR_BGR2HSV)
+h_min = 8; h_max = 20
+s_min = 100; v_min = 80
+s_max = 255; v_max = 255
+orange_mask = cv2.inRange(img_hsv, (h_min,s_min,v_min),(h_max,s_max,v_max))
+img_orange = cv2.bitwise_and(img_hsv,img_hsv,mask=orange_mask)
+img_orange = cv2.cvtColor(img_orange,cv2.COLOR_HSV2BGR)
+
+
+cv2.imshow('src',img_orange) # 출력
+cv2.imshow('h',orange_mask)
+
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+=======================================================
+img_src = cv2.imread('tomato.png',cv2.IMREAD_COLOR) - 빨강
+height, width = img_src.shape[:2]
+
+img_hsv = cv2.cvtColor(img_src,cv2.COLOR_BGR2HSV)
+h_min1 = 0; h_max1 = 2
+h_min2 = 105; h_max2 = 120
+s_min = 100; v_min = 80
+s_max = 255; v_max = 255
+red_mask_low = cv2.inRange(img_hsv, (h_min1,s_min,v_min),(h_max1,s_max,v_max))
+red_mask_high = cv2.inRange(img_hsv, (h_min2,s_min,v_min),(h_max2,s_max,v_max))
+red_mask = cv2.addWeighted(red_mask_low,1.0, red_mask_high,1.0, 0.0)
+img_red = cv2.bitwise_and(img_hsv,img_hsv,mask=red_mask)
+img_red = cv2.cvtColor(img_red,cv2.COLOR_HSV2BGR)
+
+cv2.imshow('src',img_red)
+cv2.imshow('h',red_mask)
+
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+
+cv2.imshow('src',img_red) # 출력
+cv2.imshow('h',red_mask)
+
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+
+
+===============================================
+-연두-
+img_src = cv2.imread('tomato.png',cv2.IMREAD_COLOR) # 파일 불러오기 -주황
+height, width = img_src.shape[:2]
+
+img_hsv = cv2.cvtColor(img_src,cv2.COLOR_BGR2HSV)
+h_min = 60; h_max = 80
+s_min = 50; v_min = 60
+s_max = 255; v_max = 255
+orange_mask = cv2.inRange(img_hsv, (h_min,s_min,v_min),(h_max,s_max,v_max))
+img_orange = cv2.bitwise_and(img_hsv,img_hsv,mask=orange_mask)
+img_orange = cv2.cvtColor(img_orange,cv2.COLOR_HSV2BGR)
+
+
+cv2.imshow('src',img_orange) # 출력
+cv2.imshow('h',orange_mask)
+
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+============================================
+capture = cv2.VideoCapture('KTX_departing.mp4')
+if capture.isOpened() ==False:
+    print("동영상을 열수 없음")
+    exit(1)
+
+while cv2.waitKey(33) < 0:
+    ret, img_src = capture.read()
+    height, width = img_src.shape[:2]
+    img_src =cv2.pyrDown(img_src)
+    img_hsv = cv2.cvtColor(img_src, cv2.COLOR_BGR2HSV)
+    h_min = 100; h_max =130
+    s_min = 100; v_min = 40
+    s_max = 255;v_max = 255
+    orange_mask = cv2.inRange(img_hsv, (h_min, s_min, v_min), (h_max, s_max, v_max))
+    img_orange = cv2.bitwise_and(img_hsv, img_hsv, mask=orange_mask)
+    img_orange = cv2.cvtColor(img_orange, cv2.COLOR_HSV2BGR)
+
+    #동영상 끝까지 가면 처음으로 다시
+    if capture.get(cv2.CAP_PROP_POS_FRAMES) == capture.get(cv2.CAP_PROP_FRAME_COUNT):
+        capture.set(cv2.CAP_PROP_POS_FRAMES,0)
+    cv2.imshow('dst',img_orange)
+    # cv2.imshow('h', orange_mask)
+capture.release()
+cv2.destroyAllWindows()
+
