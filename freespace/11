@@ -1,0 +1,116 @@
+
+스몰 a는 스칼라 
+
+이미지 원점 좌측상단
+이미지를 표현하는 방식
+- 비트맵 방식 : 대부분의 그림
+- 그림을 화소(pixel)로 표현 점하나를 화소로 표현
+- 벡터 방식 : 폰트 / pdf(텍스트문서)
+
+ss(앞에문자)
+(앞에문자)pp
+
+# 이미지 띠우는법
+import cv2
+img_src = cv2.imread('aaa.png',cv2.IMREAD_COLOR)
+height,width = img_src.shape[:2]
+print(width,height)
+cv2.imshow('src',img_src)
+cv2.waitKey()
+cv2.destroyWindow()
+
+
+droidcam download - 다운
+무선공유기에 폰 연결
+ip 캠 - 아이폰 
+
+0.0                                599.0
+
+dst = np.zeros(img.shape, dtype=np.uint8)
+
+for y in range(height - 1):
+    for x in range(width - 1):
+
+        p = np.array([x, y, 1])
+        p_ = np.dot(rotation_matrix, p)
+
+        x_, y_ = p_[:2]
+        x_ = int(x_)
+        y_ = int(y_)
+
+        # 입력 이미지의 픽셀을 가져올 수 있는 경우에만
+        # 결과 이미지의 현재 위치의 픽셀로 사용합니다.
+        if x_ > 0 and x_ < width and y_ > 0 and y_ < height:
+            dst[y_, x_] = img[y, x]
+
+c = np.cos(radian)
+s = np.sin(radian)
+
+# 회전변환행렬을 구성합니다.
+# OpenCV의 원점이 왼쪽아래가 아니라 왼쪽위라서 [[c, -s, 0], [s, c, 0]]가 아니라
+# [[c, s, 0], [-s, c, 0]]입니다.
+rotation_matrix = np.array([[c, s, 0], [-s, c, 0], [0, 0, 1]], dtype=float)
+
+x    x 0 0      x
+y = 0 y 0    - y
+1    0 0 1      1
+빛은(빛색) 다모이면 흰색
+물감잉크같은 색은 다모이면 검정색(물감 ,프린트)
+
+
+Default - 디폴트   
+
+- 사진 회전 - (중앙으로 옮긴후 45도 회전)
+import cv2  #라이브러리 가져오기
+import numpy as np  #opencv와 라이브러리와 numpy를 가져옵니다.
+
+img = cv2.imread('love.png', cv2.IMREAD_COLOR)  # 이미지 읽기
+height, width = img.shape[:2]   #이미지(image.jpg)를읽고 높이와 너비를 가져옵니다.
+
+# Change scale_factor to 0.7 변환 행렬 정의
+scale_factor = 0.7
+scaling_matrix = np.array([[scale_factor, 0, 0], [0, scale_factor, 0], [0, 0, 1]])#지정된 요소로 이미지의 크기를 조정합니다.
+
+# Center of the image
+center_x = width / 2
+center_y = height / 2
+
+angle = 45
+radian = angle * np.pi / 180
+c = np.cos(radian)
+s = np.sin(radian)
+rotation_matrix = np.array([[c, s, (1-c)*center_x-s*center_y], [-s, c, s*center_x+(1-c)*center_y], [0, 0, 1]])#이미지 중심을 기준으로 지정된 각도만큼 이미지를 회전한다.
+
+# Adjust translation to keep the rotated image centered
+translation_matrix = np.array([[1, 0, center_x - center_x * scale_factor], [0, 1, center_y - center_y * scale_factor], [0, 0, 1]]) # 회전된 이미지가 중앙에 유지되도록 번역을 조정한다.
+
+# Combine transformation matrices
+T = np.eye(3)
+T = np.dot(scaling_matrix, T)
+T = np.dot(translation_matrix, T)
+T = np.dot(rotation_matrix, T)
+# 크기 조정, 평행 이동 및 회전 행렬을 단일 변환 행렬로 결합합니다  [T]
+dst = np.zeros((height, width, img.shape[2]), dtype=np.uint8)
+
+for y in range(height):
+    for x in range(width):
+        # Apply the precomputed transformation matrix using backward mapping
+        new_p = np.array([x, y, 1])
+        inv_scaling_matrix = np.linalg.inv(T)
+        old_p = np.dot(inv_scaling_matrix, new_p)
+
+        x_, y_ = old_p[:2]
+        x_ = int(x_)
+        y_ = int(y_)
+
+        # Check if the transformed coordinates are within the bounds of the original image
+        if 0 < x_ < width and 0 < y_ < height:
+            dst.itemset((y, x, 0), img.item(y_, x_, 0))
+            dst.itemset((y, x, 1), img.item(y_, x_, 1))
+            dst.itemset((y, x, 2), img.item(y_, x_, 2))
+#대상 이미지( dst)의 각 픽셀에 대해 역방향 매핑을 사용하여 원본 이미지( img)의 해당 픽셀을 계산합니다.
+#결합된 변환 행렬의 역행렬을 사용하여 원본 이미지에서 해당 픽셀을 찾습니다.
+# Display the result
+cv2.imshow("result", dst)
+cv2.waitKey(0)
+#기하 변환을 적용한 후 결과 이미지를 표시합니다.
