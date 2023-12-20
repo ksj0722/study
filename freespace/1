@@ -1,89 +1,74 @@
-(;) => 세미콜론 (:) =>콜론 (,)=> 콤마
-\n : 줄바꿈 (개행)
-\t : Tab (탭키)
-\b : backspace (한칸 왼쪽으로 이동)
-\r : 맨앞으로 이동(그 줄의 맨앞)
-\a : alert(경고음)
+하이>로우>기계어
+티오베, pypl
+c/c++ 개발환경 설정
+1. VisualStudio Community <= 무료
+└ Microsoft 계정이 있어야함
+2. MinGW + VisualStudio Code(VS code)
+3. MinGW + CLion(유료버전)
 
-1. printf("따옴표 안의 내용출력");
-2. 줄바꿈(\n),탭(\t)
-3. 특수문자 \" \' 예시:printf("he sad \"you work hard\"");
-4. 변수를 printf 문 안에 사용할 경우
-예시 : printf("나이는 %d 살입니다.");
-    └ 정수 : %d : decimal(10진수)
-예시 : printf("저의 체중은 %f kg입니다.");
-    └ 실수 : %f : float ,double [ float 크기는 4 .double 크기는 8]
-     float 는 소수점 6자리까지 출력 소수점 변경시 .1.2사용
-예시 : printf("영문자 : %c",변수);
-    └ 문자(한글자,character) : %c
-예시 : printf("이름은 %s 입니다.",변수); 
-    └ 문자열(문장,string) : %s - 어드레스(주소)&가 들어가야한다.
+MinGW + VisualStudio Code (편리하기는 하나 초보자들이 접근하기 어렵다)
+└ java / python / c / 다른언어 등등
 
-5. printf문 안에 여러개의 변수를 사용할떄
-   printf(" %d %d \n",변수1,변수2);
+VisualStudio - 프로그램 개발 ( c/c++/c#/VisualBasic)<= 유료버전
+_CRT_SECURE_NO_WARNINGS
+#Pramga warning(disable:4996)
 
-출력 printf 입력 scanf (scanf("%d",&age));
+win + r => regedit => HKEY_LOCAL_MACHINE => SYSTEM => CurrentControlSet=>
+Services => LanmanWorks => parameters =>allowlnsecureg => 값을 1로 바꾼후 접속
+=>\\192.168.50.94 => share
 
-   //1, printf 사용 : 따옴표 안의 내용 출력
-   printf("안녕하세요");
-   //2. printf로 줄바꿈 사용: \n
-   printf("안녕하세요.\n");
-   //3. 특수문자(")사용시 \"를 사용
-   printf("오늘은 \"10월 31일\"입니다.\n");
-   //4. 변수를 printf문 안에 넣기
-   int age = 25; // 정수 : %d
-   printf("당신의 나이는 %d 살 입니다.\n", age);
-   // 실수 : float, double 
-   printf("float의 크기 : %d double의 크기: %d\n", sizeof(float), sizeof(double));
-   double weigth = 65.7;
-   printf("당신의 몸무게는 %.1f kg입니다.\n", weigth);
-   // 문자열: %s 문자:%c(한글자)
-   char name[20] = "kimsungjun";
-   printf("당신의 이름은 %s 입니다.\n", name);
-   printf("당신의 성은 %c 입니다.\n", name[0]); 
-   printf("정수 입력 : ");
-int num;
-scanf("%d", &num);
-printf("입력한 정수의 값은 %d 입니다.\n", num);
+vm ware 다운
 
+https://code.visualstudio.com/docs/?dv=win (vscode 다운주소)
 
-컴퓨터의 주소는 아이피 어드레스 라고부른다.
+(다운방법)
+vscode -> Extensions -> c/c++ extension pack -> install
+(실행후)
+Terminal -> configure DefaUlt build task -> 컨트롤 +시프트 + p ->
 
-★변수★
+(mingw)
+->실행후 -> architecture ->x86_64 ->
 
-1.첫 문자로 숫자는 쓸 수없다 . ( 2a -> X 
-2.알파벳 숫자 밑줄로 구성된다. 공백은 쓸수없다.
-3. 키워드는 쓸수 없다 ( If , int ,for)
-4. 첫 문자에 소문자로 해보자.
-c언어에는 논리형이 없다.
-숫자.문자로 표현 
-숫자 - int, short, long / float double
-문자 - char 
-//선언
-int num = 10; 
-수학에서는 = -> 같다
-c언어에서는 = -> 대입 연산자 ( 오른쪽에있는 값을 왼쪽에 대입한다)
-10진수 -> 0~9 (10가지)
-8진수 -> 0~7(8가지)
-2진수 -> 0~1 (2가지)
-16진수 -> 0~15 (16가지) -0x
-0~9 까지 : 10진수 사용
-0 1 2 3 4 5 6 7 8 9
-10(a)11(b)12(c)13(d)14(e)15(f)
+https://sourceforge.net/projects/mingw/ 
+-> mingw-developer-toolkit > mingw32-base > mingw32-gcc-g++ > msys-base
 
-ASCll 코드
-"0" > 0x30 (10진수)로 48
-"A" > 0x41 (10진수)로 
-"a" > 0x61 (10진수)
+내컴퓨터 -> 속성 -> 고급시스템 설정> 편집 
 
-★ 배열 ★
-char name[5] = "abcd";
+소스파일: 내가 직접 코드입력하는거 (코드 짜는곳)
+리소스파일:
+헤더파일:   .h붙는소스파일  무조건 헤더파일 <stdio.h>[함수 원형 정의해놓는곳][머리글같은느낌]
 
-(처음주소)name == &name[0]
-int num -> num &num
+#include <stdio.h> 기본적으로 가져오기
+└<stdio.h> = standard input output
 
-name[0]='a'  주소로 쓰고싶을떈 -> &name[0]
-name[1]='b  '주소로 쓰고싶을떈 -> &name[1]
-name[2]='c'  주소로 쓰고싶을떈 -> &name[2]	
-name[3]='d'  주소로 쓰고싶을떈 -> &name[3]
-name[4]="\n"  주소로 쓰고싶을떈 -> &name[4]
+void main() -> 리턴타입 함수이름(매개변수1,......)
+
+c언어 장점: 빠르다 그렇기떄문에 지금도 c언어가 살아있다.
+└자바는  돌아가기 위해 jvm 기본적으로 깐다 
+└c는 그냥 돌아간다
+
+컴파일:컴퓨터가 알아먹을수있게 언어번역
+컴파일을 하는 도구를 컴파일러
+c언어는 컴파일러(파일전체)다 자바는 인터프리터(한줄씩)
+
+ide -> 통합계발툴( 자동화 )
+
+gcc -o 실행파일이름 소스파일이름
+gcc -o hello.exe hello2.c
+hello.exe
+
+#include <stdlib.h> -> 콘솔창 옵션 -> 1)도구 2)옵션 3)디버깅 4) 일반 
+5)디버깅이 중지되면 자동으로... 체크하기
+
+(설정)ctrl + k + c // (해제)ctrl + k + u
+
+https://www.codingfont.com/
+
+확장자 이름은 반드시 .c로 저장합니다.
+1).exe - 실행파일  
+2)c - .c  c++ - .cpp ,java  - java ,pythan - .py
+3)
+4).jpg , .png , .gif, .bmp
+
+파일 실행 단축키 
+ctrl + F5 
