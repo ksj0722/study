@@ -1,0 +1,321 @@
+import random
+b =random.randint(0,255)
+g =random.randint(0,255)
+r =random.randint(0,255)
+cv2.circle(img,cp,r,(b,g,r)
+
+
+===============================1
+# import cv2
+# import numpy as np
+
+# img_src = cv2.imread('tomato.png',cv2.IMREAD_COLOR) # 파일 불러오기 -주황
+# height, width = img_src.shape[:2]
+#
+# img_hsv = cv2.cvtColor(img_src,cv2.COLOR_BGR2HSV)
+# h_min = 60; h_max = 80
+# s_min = 50; v_min = 60
+# s_max = 255; v_max = 255
+# orange_mask = cv2.inRange(img_hsv, (h_min,s_min,v_min),(h_max,s_max,v_max))
+# img_orange = cv2.bitwise_and(img_hsv,img_hsv,mask=orange_mask)
+# img_orange = cv2.cvtColor(img_orange,cv2.COLOR_HSV2BGR)
+#
+#
+# cv2.imshow('src',img_orange) # 출력
+# cv2.imshow('h',orange_mask)
+#
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+
+# = = = = = = = = = = = = = = = = = = = = = = 동영상 = = = = = = = = = = = = = = = = = =
+# capture = cv2.VideoCapture('KTX_departing.mp4')
+# if capture.isOpened() ==False:
+#     print("동영상을 열수 없음")
+#     exit(1)
+#
+# while cv2.waitKey(33) < 0:
+#     ret, img_src = capture.read()
+#     height, width = img_src.shape[:2]
+#     img_src =cv2.pyrDown(img_src)
+#     img_hsv = cv2.cvtColor(img_src, cv2.COLOR_BGR2HSV)
+#     h_min = 100; h_max =130
+#     s_min = 100; v_min = 40
+#     s_max = 255;v_max = 255
+#     orange_mask = cv2.inRange(img_hsv, (h_min, s_min, v_min), (h_max, s_max, v_max))
+#     img_orange = cv2.bitwise_and(img_hsv, img_hsv, mask=orange_mask)
+#     img_orange = cv2.cvtColor(img_orange, cv2.COLOR_HSV2BGR)
+#
+#     #동영상 끝까지 가면 처음으로 다시
+#     if capture.get(cv2.CAP_PROP_POS_FRAMES) == capture.get(cv2.CAP_PROP_FRAME_COUNT):
+#         capture.set(cv2.CAP_PROP_POS_FRAMES,0)
+#     cv2.imshow('dst',img_orange)
+#     # cv2.imshow('h', orange_mask)
+# capture.release()
+# cv2.destroyAllWindows()
+
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = ==  = = ==
+# capture = cv2.VideoCapture('imgfile/lookbook.mp4')
+# if capture.isOpened() == False:
+#     print("동영상을 열수 없음")
+#     exit(1)
+#
+#
+# while cv2.waitKey(33) < 0: #아무키나 누르면 종료
+#     ret, img_src = capture.read()
+#
+#     img_src = cv2.pyrDown(img_src)
+#     height, width = img_src.shape[:2]
+#     img_gray = cv2.cvtColor(img_src, cv2.COLOR_BGR2GRAY)
+#     img_gray = cv2.cvtColor(img_gray, cv2.COLOR_GRAY2BGR)
+#
+#     img_crop1 = img_src[height // 4:3 * height // 4, width // 4:3 * width // 4, :].copy()
+#     img_crop2 = img_gray[height // 4:3 * height // 4, width // 4:3 * width // 4, :].copy()
+#     img_gray[height // 4:3 * height // 4, width // 4:3 * width // 4, :] = img_crop1
+#     img_src[height // 4:3 * height // 4, width // 4:3 * width // 4, :] = img_crop2
+#     img_dst = cv2.hconcat([img_src, img_gray])
+#
+#
+#     # 동영상 끝까지 읽으면 처음으로 돌아감
+#     if capture.get(cv2.CAP_PROP_POS_FRAMES) == capture.get(cv2.CAP_PROP_FRAME_COUNT):
+#         capture.set(cv2.CAP_PROP_POS_FRAMES, 0)
+#     cv2.imshow('dst', img_dst)
+# capture.release()
+# cv2.destroyAllWindows()
+# =================================================================================
+
+import cv2
+import numpy as np
+import random
+
+height,width,dim= (600,800,3)
+img_src = np.zeros((height,width,dim),dtype=np.uint8)
+#화면 중앙을 가로질러 선굴기 3인 대각선을 2개 그려 교차하도록 합니다.
+cv2.line(img_src,(width-1,0),(0,height-1),(0,255,0),3)
+cv2.line(img_src,(0,0),(width-1,height-1),(0,0,255),3)
+## 원그리기 : 원 (300,300) 반지름 50 초록색(0,255,0),채우기
+color=(0,255,0)
+cv2.circle(img_src,(510,300),3,(0,0,255),-1)
+cv2.circle(img_src,(510,300),50,color,2)
+cv2.circle(img_src,(650,200),100,(0,255,255),-1)
+cv2.circle(img_src,(650,200),3,(0,0,255),-1)
+b =random.randint(0,255) #random. 이거는 실행할때마다 색깔랜덤
+g =random.randint(0,255)
+r =random.randint(0,255)
+# cv2.circle(img_src,(650,200),100,(b,g,r),1)
+#사각형
+cv2.rectangle(img_src,(50,50),(450,450),(0,255,0),1)
+cv2.rectangle(img_src,(150,200),(250,300),(b,g,r),-1)
+cv2.rectangle(img_src,(300,150, 50, 100),(255,255,0),-1)
+
+cv2.imshow('src',img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+=============================================2
+import cv2
+import numpy as np
+import random
+height,width,dim= (600,800,3)
+img_src = np.zeros((height,width,dim),dtype=np.uint8)
+b =random.randint(0,255) #random. 이거는 실행할때마다 색깔랜덤
+g =random.randint(0,255)
+r =random.randint(0,255)
+cv2.rectangle(img_src,(50,50),(450,450),(0,255,0),1)
+cv2.rectangle(img_src,(150,200),(250,300),(b,g,r),-1)
+cv2.rectangle(img_src,(300,150, 50, 100),(255,255,0),-1)
+
+cv2.imshow('src',img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+==============================================3
+import cv2
+import numpy as np
+import random
+
+height,width,dim= (600,800,3)
+img_src = np.zeros((height,width,dim),dtype=np.uint8)
+#pt1 = 좌상단좌표 ,pt2 =우하단좌표 ,
+cv2.line(img_src,(100,100),(700,100),(255,0,0),20)
+cv2.line(img_src,(100,200),(700,200),(0,255,0),20)
+cv2.line(img_src,(100,300),(700,300),(0,0,255),20)
+cv2.line(img_src,(100,400),(700,400),(255,255,0),20)
+cv2.line(img_src,(100,500),(700,500),(0,255,255),20)
+#대각선 선 2개 그리기
+cv2.line(img_src,(0,height-1),(width-1,0),(0,255,255),3) # 오른쪽에서 왼쪽 선 우측
+cv2.line(img_src,(0,0),(width-1,height-1),(0,255,255),3) #왼쪽에서 오른쪽 선 좌측
+
+cv2.imshow('src',img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+================================================4
+import cv2
+import numpy as np
+import random
+
+height,width,dim= (600,800,3)
+img_src = np.zeros((height,width,dim),dtype=np.uint8)
+center = (400,300) #타원의 중심점
+axes = (200,100) # 타원의 긴부분과 짧은부분
+angle = 0 # 타원의 장축이 기울어진 각도(시계방향으로 돌림)
+startAngle = 0 #시작각도
+endAngle = 90 # 끝각도
+color = (255,255,0) # 색
+thickness = 2 # 두께
+cv2.ellipse(img_src,center,axes,angle,startAngle,endAngle,color,thickness)
+
+cv2.imshow('src',img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+===============================================5
+import cv2
+import numpy as np
+import random
+
+height,width,dim= (600,800,3)
+img_src = np.zeros((height,width,dim),dtype=np.uint8)
+pt1 =np.array([[100,500],[300,500],[200,500]])
+pt2 =np.array([[600,500],[700,500],[650,550]])
+
+img_src =cv2.polylines(img_src,[pt1],True,(0,255,255),3) #다각형
+img_src = cv2.fillPoly(img_src,[pt2],(0,255,255),cv2.LINE_AA) # 내부가 채워진 다각형
+
+
+
+cv2.imshow('src',img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+=============================================6
+import cv2
+import numpy as np
+import random
+#글자는 좌측하단 기준점이다 이미지는 좌측상단.!!!!!!!
+height,width,dim= (600,800,3)
+img_src = np.zeros((height,width,dim),dtype=np.uint8)
+pt = (200,300)
+print()
+
+img_src = cv2.putText(img_src,"subbanng Hi",(200,300),cv2.FONT_HERSHEY_SIMPLEX,1,(255,0,0),3)
+# cv2.line(img_src,(180,300),(220,300),(255,255,255),1)
+# cv2.line(img_src,(200,280),(200,320),(255,255,255),1)
+cv2.line(img_src,(pt[0]-20,pt[1]),(pt[0]+20,pt[1]),(255,255,255),1)
+cv2.line(img_src,(pt[0],pt[1]-20),(pt[0],pt[1]+20),(255,255,255),1)
+
+cv2.imshow('src',img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+# =============================================================
+# height, width, dim = (600, 800, 3)
+# img_src = np.zeros((height, width, dim), dtype=np.uint8)
+# pt = (200, 300)
+#
+# # Add text to the image
+# cv2.putText(img_src, "subbanng Hi", (pt[0], pt[1]), cv2.FONT_HERSHEY_SIMPLEX, 2, (255, 0, 0), 3)
+#
+# # Draw a rectangle around the text
+# text_size = cv2.getTextSize("subbanng Hi", cv2.FONT_HERSHEY_SIMPLEX, 2, 3)[0]
+# cv2.rectangle(img_src, (pt[0], pt[1] - text_size[1]), (pt[0] + text_size[0], pt[1]), (255, 255, 255), 1)
+#
+# cv2.imshow('src', img_src)
+# cv2.waitKey()
+# cv2.destroyAllWindows()
+
+==========================================7
+import cv2
+import numpy as np
+import random
+
+img_src = cv2.imread('ggggggg.png',cv2.IMREAD_COLOR)
+height,width = img_src.shape[:2]
+####
+img_gray = cv2.cvtColor(img_src,cv2.COLOR_BGR2GRAY)
+ret,img_binary = cv2.threshold(img_gray,250,255,cv2.THRESH_BINARY_INV)
+
+
+cv2.imshow('gray',img_binary)
+cv2.imshow('src',img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+========================================8
+import cv2
+import numpy as np
+import random
+
+img_src = cv2.imread('ggggggg.png',cv2.IMREAD_COLOR)
+height,width = img_src.shape[:2]
+####
+img_gray = cv2.cvtColor(img_src,cv2.COLOR_BGR2GRAY)
+ret,img_binary = cv2.threshold(img_gray,250,255,cv2.THRESH_BINARY_INV)
+
+contours,hieratchy = cv2.findContours(img_binary,
+                                      cv2.RETR_LIST, # 계층구조 없음
+                                      cv2.CHAIN_APPROX_NONE) # 모든외각선 추출
+for i,contour in enumerate(contours):
+    area = cv2.contourArea(contour) # 면적 출력하는 함수 contourArea
+    if area > 5000:
+        cv2.drawContours(img_src, [contour], 0, (0, 0, 255), 2) #외각선 그리기
+        # [contours[i]] 위랑같음
+        x,y,w,h = cv2.boundingRect(contour)
+        cv2.rectangle(img_src,(x,y,w,h),(0,0,255),3) # 사각형 그리기
+        #사각형 그리기 끝
+        #최소 면적의 사각형
+        rect = cv2.minAreaRect(contour)
+        box = cv2.boxPoints(rect)
+        box = np.intp(box)
+        cv2.drawContours(img_src,[box],0,(255,0,0),2)
+        # 최소면적 사각형 그리기 끝
+        cv2.putText(img_src,f'{i}:{area:.0f}',tuple(contour[0][0]),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),5)
+
+
+cv2.imshow('gray',img_binary)
+cv2.imshow('src',img_src)
+cv2.waitKey()
+cv2.destroyAllWindows()
+
+=======================================9
+import cv2
+def on_trackbar(x):
+    pass
+
+cv2.namedWindow('Threshold')
+cv2.createTrackbar('threshold', 'Threshold', 0, 255, on_trackbar)
+cv2.setTrackbarPos('threshold', 'Threshold', 0)
+img_gray = cv2.imread('ggggggg.png', cv2.IMREAD_GRAYSCALE)
+
+while (1):
+    thres = cv2.getTrackbarPos('threshold', 'Threshold')
+    ret, img_binary = cv2.threshold(img_gray, thres, 255, cv2.THRESH_BINARY_INV)
+    cv2.imshow('Threshold', img_binary)
+
+    if cv2.waitKey(1) & 0xFF == 27: # ESC키
+        break
+cv2.destroyAllWindows()
+
+=========================================10 준디동영상
+import cv2
+import numpy as np
+
+capture = cv2.VideoCapture('KakaoTalk_20231124_120141576.mp4')
+if capture.isOpened() == False:
+    print("동영상 열수 없음")
+    exit(1)
+
+while cv2.waitKey(40) < 0:
+    ret,img_src =capture.read() # 동영상 덩어리를 이미지로 한장씩 읽는거임
+    img_src = cv2.pyrDown(img_src)
+    img_lr = cv2.flip(img_src, 1)
+    img_ud = cv2.flip(img_src, 0)
+    img_lr_ud = cv2.flip(img_src, -1)
+    img_dst = cv2.hconcat([img_src, img_lr])
+    img_tmp = cv2.hconcat([img_ud, img_lr_ud])
+    img_dst = cv2.vconcat([img_dst, img_tmp])
+    cv2.imshow('dst', img_dst)
+if capture.get(cv2.CAP_PROP_POS_FRAMES) == capture.get(cv2.CAP_PROP_POS_FRAMES_COUNT):
+ capture.set(cv2.CAP_PROP_POS_FRAMES,0)
+ cv2.imshow('dst', img_dst)
+
+capture.release()
+cv2.destroyWindow()
