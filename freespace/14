@@ -1,0 +1,79 @@
+import numpy as np
+import numpy as numpy
+import cv2
+################################# 이미지 출력 #######################################
+img_src = cv2.imread('apple.png',cv2.IMREAD_COLOR)
+img_hsv = cv2.cvtColor(img_src,cv2.COLOR_BGR2HSV)
+h_min = 0; h_max = 10
+h_min_1 = 170 ; h_max_1 = 180
+s_min =  40 ; s_max = 255
+v_min =  70; v_max = 255
+filter_1 = cv2.inRange(img_hsv,(h_min,s_min,v_min),(h_max,s_max,v_max),)
+filter_2 = cv2.inRange(img_hsv,(h_min_1,s_min,v_min),(h_max_1,s_max,v_max),)
+ # 합치기
+filter = cv2.addWeighted(filter_1,0.5,filter_2,0.5,0)
+img_dst = cv2.bitwise_and(img_src,img_src,mask=filter)
+img_dst= cv2.cvtColor(img_dst,cv2.COLOR_HSV2BGR)
+ # 회색으로 변경
+img_gray = cv2.cvtColor(img_dst,cv2.COLOR_BGR2GRAY)
+#블러처리
+img_dst2 = cv2.GaussianBlur(img_gray,(15,15),0)
+# threshold
+img_binary = cv2.adaptiveThreshold(img_gray,255,
+                                   cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+                                   cv2.THRESH_BINARY_INV, 31, 3)
+contours,hierachy = cv2.findContours(img_binary,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
+###모폴로지
+kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+img_mop = cv2.morphologyEx(img_binary,cv2.MORPH_OPEN,kernel,iterations=5)
+img_mop = cv2.morphologyEx(img_binary,cv2.MORPH_CLOSE,kernel,iterations=4)
+
+
+
+
+외곽선 그리기
+for i, contours in enumerate(contours):
+    area = cv2.contourArea(contours)
+    if area >34000 :
+        cv2.drawContours(img_src,[contours],0,(0,255,0),3)
+        cv2.putText(img_src,str(i),tuple(contours[0][0]),cv2.FONT_HERSHEY_SCRIPT_SIMPLEX,0.5,(255,0,0),2)
+        x, y, w, h = cv2.boundingRect(contours)
+        cv2.rectangle(img_src, (x, y, w, h), (202, 184, 242), 1)
+
+
+        최소면적에 사각형그리기
+        rect = cv2.minAreaRect(contours)
+        box = cv2.boxPoints(rect)
+        box = np.intp(box)
+        cv2.drawContours(img_src, [box], 0, (255, 0, 0), 2)
+
+
+cv2.imshow('src',img_src)
+cv2.imshow('dst',img_dst)
+cv2.waitKey()
+cv2.destroyAllWindows()
+####################################################################################
+
+################################## 비디오 출력 #######################################
+# cap = cv2.VideoCapture('super.mp4')
+#
+# if cap.isOpened() == False:
+#     print("동영상을 열수 없습니다.")
+#     exit(1)
+#
+# while cv2.waitKey(33) < 0:
+#     ret,img_src = cap.read()
+#     height, width = img_src.shape[:2]
+#     img_dst = cv2.resize(img_src, dsize=(500, 700), interpolation=cv2.INTER_LINEAR)
+#     if ret == False:
+#         print("동영상 파일 읽기 완료")
+#         break
+#
+#     cv2.imshow('src',img_dst)
+#
+# cap.release()
+# cv2.destroyAllWindows()
+
+
+
+####################################################################################
