@@ -1,0 +1,77 @@
+입출력 함수가 버퍼를 사용하면 좋은점
+1. 데이터를 안정적으로 입력받을수있다.
+2. 입력장치와 독립적으로 사용할수 있다.
+
+
+
+
+char str[10];
+
+fputs("문자열을 입력 하세요 :", stdout);
+fgets(str, sizeof(str), stdin);
+fputs("==========================\n", stdout);
+fputs("입력된 문자열 : ", stdout);
+fputs(str, stdout);
+
+return 0;
+
+char str[100];
+while (1) {
+	fgets(str, sizeof(str), stdin);
+	printf("문자열의 길이 : %d \n", strlen(str));
+
+
+===================================
+char name[100];
+fputs("문자를 입력하세요 :", stdout);
+fgets(name, sizeof(name), stdin);
+fputs("====★★★★★====\n", stdout);
+fputs("입력된 문자 : ", stdout);
+fputs(name, stdout);
+while (1) {
+	fgets(name, sizeof(name), stdin);
+	printf("가장 긴 단어의 길이 : %d\n", strlen(name));
+
+===========================================
+	char name[] = "Hong gildong";
+	printf("%s\n", name);
+	puts(name);
+	printf("\n===================\n");
+	char str[] = "Hello-C";
+	char* ptr = "Hello-C";
+
+	// 둘다 출력 가능
+	puts(str);
+	puts(ptr);
+	printf("%s\n", str);
+	printf("%s\n", ptr);
+
+	// 포인터는 문자열 변경이 가능 배열은 안됨
+	/*ptr = "안녕C";
+	puts(ptr);*/
+	//strcpy(str, "안녕C");
+	//puts(str);
+
+	str[0] = 'J';
+	puts(str);
+	ptr[0] = 'J';
+	puts(ptr);
+
+
+================================
+getchar();   -> 버퍼에서 하나의 문자를 읽어서 반환 , 반환 문자는 버림
+scanf("%*c); -> 버퍼에서 하나의 문자를 읽어서 버림, 변수는 필요없음
+fgets(stdin); ->  버퍼에서 하나의 문자를 읽어서 반환 , 반환 문자는 버림
+
+strcpy => 복사
+strcat  => 문자열 연결(개수를 정해서 연결)
+strcmp => 문자 비교
+strchr  => 문자 검색
+
+puts 함수 원형
+└int puts(const shar *str) // 문자열을 출력하고 자동 줄바꿈
+
+fputs 함수 원형
+└int fputs(const char *str,FILE *stream)  // 문자열을 출력하고 줄 바꾸지않음.
+
+둘다 정상출력된 경우 0을 반환하고 출력 실패하면 -1(EOF)을 반환한다.
