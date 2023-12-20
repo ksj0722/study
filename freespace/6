@@ -1,0 +1,59 @@
+20231106
+함수:입력을 받아서 특정한 작업을 수행하여서 결과를 반환하는 블랙박스(상자)와 같다
+printf("hello");
+scanf("%d");
+system 제공하는 함수가 하나가있고(printf,scanf)
+유저가 만든 함수가있다.
+c언어에는 기본적으로int main()이라는 함수가있따.
+#pragma once
+
+
+int sum(int n1, int n2){                               
+return n1+n2;                                 함수이름 중복되거나 같으면 실행안됨!!
+}
+float sum(float n1, float n2){
+return n1+n2;
+}
+
+리턴타입 함수이름()
+// chapter.h
+void printf_star();
+
+main(){
+printf_star();
+}
+// chapter.c
+#include "chapter.h"
+void printf_star(){
+printf("*******");
+}
+
+매번 난수를 다르게 
+
+전역변수(한국) =전체
+
+지역변수(대구) = 함수가 호출할떄 그떄만 살아있따 밖에서는 이 변수가있는지도 모른다
+
+factorial 함수 - 재귀호출 예)
+1 | =1
+2 | = 2 * 1 
+3 | = 3 * 2 * 1
+4 | = 4 * 3 * 2 * 1
+
+int f (int n)
+{
+	int fact  =1 ;
+	if(n==1)
+	   fact =1;
+	else
+	   fact = f(n-1)*n;
+	return fact;
+}
+
+void main()
+{
+	int n;
+	scanf
+
+c언어로 2의n승을 구하는 함수를 재귀적으로 구현해보자
+ 그리고 그에따른 적절한 main 함수로 구현해보자 
