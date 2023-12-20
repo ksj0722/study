@@ -1,0 +1,105 @@
+구조체
+typedef = typedef int BOOLEAN;
+
+★x값과 y값으로 이루어지는 화면의 좌표
+struct point
+{
+   int x; 	//x좌표
+   int y;	//y좌표
+};
+//복소수
+struct complex
+{
+  double real;	//실수부
+  double imag;	//허수부
+};
+//날짜
+struct date
+{
+   int month;
+   int day;
+   int year;
+};
+// 사각형
+struct rect
+{
+  int x;
+  int y;
+  int width;
+  int grade;
+};
+//직원
+struct employee
+{
+   char name[20];  //이름
+   int age;            // 나이
+   int gender;       //성별
+   int salary;        // 월급
+};
+
+
+
+
+
+struct Student
+{
+    char name[20];
+    int age;
+};
+struct Student s1= {"kim"};
+==================
+typedef struct
+{
+    char name[20];
+    int age;
+}Student;
+
+student s1 ={"kim"};
+
+
+struct student
+{                                    int main(void){
+   int number;                                         struct student s1;   <- 구조체 변수선언
+   char name[20];  <-구조체 정의     ->       ....                            
+   double grade;                                    }
+};
+
+malloc 메모리 할당후 free 를써줘야함
+예시
+struct SHuman
+{
+char name[12];
+int age;
+double height;
+};
+int main(){
+struct SHuman *pjuso[5]; //구조체 포인터 배열
+
+// 구조체 할당
+for (int i=0; i<5; i++)
+{
+pjuso[i]= (struct SHuman*)malloc(sizeof(struct SHuman);
+}
+//값저장
+pjuso[3]-> age =45;
+printf("%d\n",pjuso[3]->age);
+
+//해제
+for(int i =0; i < 5; i++)
+{
+free(pjuso[i]);
+}
+}
+
+요기에 어떤값을 집어넣어줘야한다 (가리키는곳위치에 값을 넣어야함 (&name)
+
+
+void add(int *p)
+{
+*p = *p + 1;
+}
+int main()
+{
+int num=10;
+add(&num);
+}
